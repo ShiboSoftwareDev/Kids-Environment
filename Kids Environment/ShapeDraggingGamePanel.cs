@@ -12,6 +12,7 @@ namespace KidsGameEnvironment
         private ShapeType[] shapeTypes;
         private Rectangle[] shapes;
         private Rectangle[] targets;
+        private Color[] shapeColors;
         private bool[] isShapePlaced;
         private bool[] isTargetOccupied;
         private int selectedShapeIndex = -1;
@@ -23,7 +24,6 @@ namespace KidsGameEnvironment
         private Label timerLabel;
         private bool gameStarted = false;
 
-        private readonly Color shapeColor = Color.CornflowerBlue;
         private readonly Color targetColor = Color.LightGray;
         private readonly Color placedShapeColor = Color.LightGreen;
 
@@ -69,9 +69,11 @@ namespace KidsGameEnvironment
             };
 
             shapeTypes = new ShapeType[4];
+            shapeColors = new Color[4];
             for (int i = 0; i < shapeTypes.Length; i++)
             {
                 shapeTypes[i] = (ShapeType)rand.Next(0, 4);
+                shapeColors[i] = Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256));
             }
 
             isShapePlaced = new bool[shapes.Length];
@@ -211,7 +213,7 @@ namespace KidsGameEnvironment
                 {
                     if (!isShapePlaced[i])
                     {
-                        using (Brush shapeBrush = new SolidBrush(shapeColor))
+                        using (Brush shapeBrush = new SolidBrush(shapeColors[i]))
                         {
                             DrawShape(g, shapeBrush, Pens.Black, shapeTypes[i], shapes[i]);
                         }
