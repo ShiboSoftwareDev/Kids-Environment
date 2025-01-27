@@ -13,6 +13,7 @@ namespace KidsGameEnvironment
         private Rectangle[] shapes;
         private Rectangle[] targets;
         private bool[] isShapePlaced;
+        private bool[] isTargetOccupied;
         private int selectedShapeIndex = -1;
         private Point offset;
         private Timer gameTimer;
@@ -24,6 +25,7 @@ namespace KidsGameEnvironment
 
         private readonly Color shapeColor = Color.CornflowerBlue;
         private readonly Color targetColor = Color.LightGray;
+        private readonly Color placedShapeColor = Color.LightGreen;
 
         public ShapeDraggingGamePanel()
         {
@@ -73,6 +75,7 @@ namespace KidsGameEnvironment
             }
 
             isShapePlaced = new bool[shapes.Length];
+            isTargetOccupied = new bool[targets.Length];
             Invalidate();
         }
 
@@ -191,12 +194,24 @@ namespace KidsGameEnvironment
                     }
                 }
 
-                // Draw shapes
-                using (Brush shapeBrush = new SolidBrush(shapeColor))
+                // Draw placed shapes first
+                for (int i = 0; i < shapes.Length; i++)
                 {
-                    for (int i = 0; i < shapes.Length; i++)
+                    if (isShapePlaced[i])
                     {
-                        if (!isShapePlaced[i])
+                        using (Brush placedShapeBrush = new SolidBrush(placedShapeColor))
+                        {
+                            DrawShape(g, placedShapeBrush, Pens.Black, shapeTypes[i], shapes[i]);
+                        }
+                    }
+                }
+
+                // Draw unplaced shapes
+                for (int i = 0; i < shapes.Length; i++)
+                {
+                    if (!isShapePlaced[i])
+                    {
+                        using (Brush shapeBrush = new SolidBrush(shapeColor))
                         {
                             DrawShape(g, shapeBrush, Pens.Black, shapeTypes[i], shapes[i]);
                         }
@@ -287,14 +302,22 @@ namespace KidsGameEnvironment
         {
             if (selectedShapeIndex != -1)
             {
+                bool placed = false;
                 for (int i = 0; i < targets.Length; i++)
                 {
-                    if (targets[i].Contains(shapes[selectedShapeIndex].Location))
+                    if (targets[i].Contains(shapes[selectedShapeIndex].Location) && !isTargetOccupied[i])
                     {
                         shapes[selectedShapeIndex] = targets[i];
                         isShapePlaced[selectedShapeIndex] = true;
+                        isTargetOccupied[i] = true;
+                        placed = true;
                         break;
                     }
+                }
+
+                if (!placed)
+                {
+                    shapes[selectedShapeIndex] = new Rectangle(shapes[selectedShapeIndex].X, shapes[selectedShapeIndex].Y, shapes[selectedShapeIndex].Width, shapes[selectedShapeIndex].Height);
                 }
 
                 selectedShapeIndex = -1;
@@ -302,7 +325,7 @@ namespace KidsGameEnvironment
                 Invalidate();
 
                 // Check for game completion
-                if (Array.TrueForAll(isShapePlaced, placed => placed))
+                if (Array.TrueForAll(isShapePlaced, isPlaced => isPlaced))
                 {
                     gameTimer.Stop();
                     MessageBox.Show("Congratulations! All shapes placed correctly!", "Game Over", MessageBoxButtons.OK, MessageBoxIcon.Information);
