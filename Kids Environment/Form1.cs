@@ -18,8 +18,8 @@ namespace KidsGameEnvironment
         private void Init()
         {
             this.mainPanel = new System.Windows.Forms.Panel();
-            this.game1Panel = CreateGamePanel("game1Panel");
-            this.game2Panel = CreateGamePanel("game2Panel");
+            this.game1Panel = CreateGamePanel("game1Panel", new MazeGamePanel());
+            this.game2Panel = CreateGamePanel("game2Panel", new ShapeDraggingGamePanel());
             this.game3Panel = CreateGamePanel("game3Panel");
             this.SuspendLayout();
             // 
@@ -81,9 +81,10 @@ namespace KidsGameEnvironment
             game3Panel.Visible = false;
 
             panel.Visible = true;
+            panel.Focus();
         }
 
-        private Panel CreateGamePanel(string panelName)
+        private Panel CreateGamePanel(string panelName, Panel gamePanel = null)
         {
             Panel panel = new Panel
             {
@@ -94,6 +95,12 @@ namespace KidsGameEnvironment
                 TabIndex = 5,
                 Visible = false
             };
+
+            if (gamePanel != null)
+            {
+                gamePanel.Dock = DockStyle.Fill;
+                panel.Controls.Add(gamePanel);
+            }
 
             Button returnButton = new Button
             {
@@ -106,7 +113,9 @@ namespace KidsGameEnvironment
             };
             returnButton.Click += new System.EventHandler(this.btnReturn_Click);
 
+
             panel.Controls.Add(returnButton);
+            returnButton.BringToFront(); // Ensure the return button is always on top
 
             return panel;
         }
@@ -131,7 +140,5 @@ namespace KidsGameEnvironment
 
             return button;
         }
-
     }
 }
-
