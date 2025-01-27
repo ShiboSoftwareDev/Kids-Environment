@@ -24,7 +24,7 @@ namespace KidsGameEnvironment
         private Label timerLabel;
         private bool gameStarted = false;
 
-        private readonly Color targetColor = Color.LightGray;
+        private readonly Color targetColor = Color.White;
         private readonly Color placedShapeColor = Color.LightGreen;
 
         public ShapeDraggingGamePanel()
