@@ -23,9 +23,9 @@ namespace KidsGameEnvironment
             this.btnGame3 = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
             this.mainPanel = new System.Windows.Forms.Panel();
-            this.game1Panel = new System.Windows.Forms.Panel();
-            this.game2Panel = new System.Windows.Forms.Panel();
-            this.game3Panel = new System.Windows.Forms.Panel();
+            this.game1Panel = CreateGamePanel("game1Panel");
+            this.game2Panel = CreateGamePanel("game2Panel");
+            this.game3Panel = CreateGamePanel("game3Panel");
             this.btnReturn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -82,38 +82,11 @@ namespace KidsGameEnvironment
             this.mainPanel.Size = new System.Drawing.Size(1000, 600);
             this.mainPanel.TabIndex = 4;
             // 
-            // game1Panel
-            // 
-            this.game1Panel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.game1Panel.Location = new System.Drawing.Point(0, 0);
-            this.game1Panel.Name = "game1Panel";
-            this.game1Panel.Size = new System.Drawing.Size(1000, 600);
-            this.game1Panel.TabIndex = 5;
-            this.game1Panel.Visible = false;
-            // 
-            // game2Panel
-            // 
-            this.game2Panel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.game2Panel.Location = new System.Drawing.Point(0, 0);
-            this.game2Panel.Name = "game2Panel";
-            this.game2Panel.Size = new System.Drawing.Size(1000, 600);
-            this.game2Panel.TabIndex = 6;
-            this.game2Panel.Visible = false;
-            // 
-            // game3Panel
-            // 
-            this.game3Panel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.game3Panel.Location = new System.Drawing.Point(0, 0);
-            this.game3Panel.Name = "game3Panel";
-            this.game3Panel.Size = new System.Drawing.Size(1000, 600);
-            this.game3Panel.TabIndex = 7;
-            this.game3Panel.Visible = false;
-            // 
             // btnReturn
             // 
             this.btnReturn.Location = new System.Drawing.Point(12, 12);
             this.btnReturn.Name = "btnReturn";
-            this.btnReturn.Size = new System.Drawing.Size(75, 23);
+            this.btnReturn.Size = new System.Drawing.Size(100, 50);
             this.btnReturn.TabIndex = 8;
             this.btnReturn.Text = "Return";
             this.btnReturn.UseVisualStyleBackColor = false;
@@ -169,6 +142,34 @@ namespace KidsGameEnvironment
             btnReturn.Visible = true;
 
             panel.Visible = true;
+        }
+
+        private Panel CreateGamePanel(string panelName)
+        {
+            Panel panel = new Panel
+            {
+                Dock = DockStyle.Fill,
+                Location = new System.Drawing.Point(0, 0),
+                Name = panelName,
+                Size = new System.Drawing.Size(1000, 600),
+                TabIndex = 5,
+                Visible = false
+            };
+
+            Button returnButton = new Button
+            {
+                Location = new System.Drawing.Point(12, 12),
+                Name = "btnReturn",
+                Size = new System.Drawing.Size(100, 50),
+                Text = "Return",
+                UseVisualStyleBackColor = false,
+                BackColor = System.Drawing.Color.Red
+            };
+            returnButton.Click += new System.EventHandler(this.btnReturn_Click);
+
+            panel.Controls.Add(returnButton);
+
+            return panel;
         }
 
         private System.Windows.Forms.Button btnGame1;
