@@ -15,12 +15,16 @@ namespace KidsGameEnvironment
         private List<Color> colors;
         private int gridSize = 4; // 4x4 grid
 
+        private Label resultLabel;
+        private Button restartButton;
+
         public ColorMatchingGame()
         {
             this.Dock = DockStyle.Fill;
             this.BackColor = Color.DarkGreen;
-            this.Padding = new Padding(20,70,20,20); // Add padding around the control
+            this.Padding = new Padding(20, 70, 20, 20); // Add padding around the control
             InitializeGame();
+            InitializeUI();
         }
 
         private void InitializeGame()
@@ -69,6 +73,34 @@ namespace KidsGameEnvironment
             }
 
             this.Controls.Add(grid);
+        }
+
+        private void InitializeUI()
+        {
+            resultLabel = new Label
+            {
+                Size = new Size(500, 50),
+                TextAlign = ContentAlignment.MiddleCenter,
+                Font = new Font("Arial", 14, FontStyle.Bold),
+                BackColor = Color.Transparent,
+                ForeColor = Color.White,
+                Visible = false
+            };
+            Controls.Add(resultLabel);
+            resultLabel.BringToFront();
+
+            restartButton = new Button
+            {
+                Text = "Play Again",
+                Size = new Size(150, 40),
+                Font = new Font("Arial", 10),
+                BackColor = Color.LightGreen,
+                FlatStyle = FlatStyle.Flat,
+                Visible = false
+            };
+            restartButton.Click += RestartButton_Click;
+            Controls.Add(restartButton);
+            restartButton.BringToFront();
         }
 
         private void Card_Click(object sender, EventArgs e)
@@ -128,12 +160,33 @@ namespace KidsGameEnvironment
 
                 if (grid.Controls.OfType<Button>().All(b => b.BackColor != Color.Gray))
                 {
-                    MessageBox.Show("You win!");
+                    ShowWinningMessage();
                 }
             };
             delayTimer.Start();
         }
 
+        private void ShowWinningMessage()
+        {
+            resultLabel.Text = "Congratulations! You've matched all the colors!";
+            resultLabel.ForeColor = Color.Green;
+            resultLabel.BackColor = Color.White;
+            resultLabel.Location = new Point((Width - resultLabel.Width) / 2, (Height - resultLabel.Height) / 2);
+            resultLabel.Visible = true;
+            resultLabel.BringToFront();
+
+            restartButton.Location = new Point((Width - restartButton.Width) / 2, resultLabel.Bottom + 10);
+            restartButton.Visible = true;
+            restartButton.BringToFront();
+        }
+
+        private void RestartButton_Click(object sender, EventArgs e)
+        {
+            this.Controls.Remove(grid);
+            InitializeGame();
+            resultLabel.Visible = false;
+            restartButton.Visible = false;
+        }
 
         private void Shuffle<T>(IList<T> list)
         {
