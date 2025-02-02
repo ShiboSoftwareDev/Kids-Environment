@@ -93,6 +93,12 @@ namespace KidsGameEnvironment
                 secondClicked = clicked;
             }
 
+            // Disable all buttons temporarily
+            foreach (Button button in grid.Controls.OfType<Button>())
+            {
+                button.Enabled = false;
+            }
+
             // Check match after a short delay.
             Timer delayTimer = new Timer { Interval = 500 };
             delayTimer.Tick += (s, args) =>
@@ -113,6 +119,12 @@ namespace KidsGameEnvironment
                 firstClicked = null;
                 secondClicked = null;
 
+                // Re-enable all buttons that are still gray
+                foreach (Button button in grid.Controls.OfType<Button>().Where(b => b.BackColor == Color.Gray))
+                {
+                    button.Enabled = true;
+                }
+
                 if (grid.Controls.OfType<Button>().All(b => b.BackColor != Color.Gray))
                 {
                     MessageBox.Show("You win!");
@@ -120,6 +132,7 @@ namespace KidsGameEnvironment
             };
             delayTimer.Start();
         }
+
 
         private void Shuffle<T>(IList<T> list)
         {
