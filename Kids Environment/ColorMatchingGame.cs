@@ -19,6 +19,7 @@ namespace KidsGameEnvironment
         {
             this.Dock = DockStyle.Fill;
             this.BackColor = Color.DarkGreen;
+            this.Padding = new Padding(20,70,20,20); // Add padding around the control
             InitializeGame();
         }
 
