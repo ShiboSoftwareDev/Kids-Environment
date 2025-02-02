@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Windows.Forms;
 
 namespace KidsGameEnvironment
@@ -13,6 +14,8 @@ namespace KidsGameEnvironment
 
         public MainForm()
         {
+            this.Icon = new System.Drawing.Icon("C:\\Users\\ahmed\\source\\repos\\Kids Environment\\Kids Environment\\joystick_game_3819.ico");
+
             Init();
         }
 

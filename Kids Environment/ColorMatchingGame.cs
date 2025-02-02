@@ -21,7 +21,7 @@ namespace KidsGameEnvironment
         public ColorMatchingGame()
         {
             this.Dock = DockStyle.Fill;
-            this.BackColor = Color.DarkGreen;
+            this.BackColor = Color.White;
             this.Padding = new Padding(20, 70, 20, 20);
             InitializeGame();
             InitializeUI();
@@ -44,7 +44,7 @@ namespace KidsGameEnvironment
                 RowCount = gridSize,
                 ColumnCount = gridSize,
                 Dock = DockStyle.Fill,
-                BackColor = Color.DarkGreen,
+                BackColor = Color.White,
             };
 
             for (int i = 0; i < gridSize; i++)
