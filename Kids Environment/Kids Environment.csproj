@@ -52,12 +52,15 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="MazeGamePanel.cs">
+    <Compile Include="ColorMatchingGame.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MazeGame.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShapeDraggingGamePanel.cs">
+    <Compile Include="ShapeDraggingGame.cs">
       <SubType>Component</SubType>
     </Compile>
     <EmbeddedResource Include="Form1.resx">

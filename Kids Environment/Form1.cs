@@ -18,9 +18,12 @@ namespace KidsGameEnvironment
         private void Init()
         {
             this.mainPanel = new System.Windows.Forms.Panel();
-            this.game1Panel = CreateGamePanel("game1Panel", new MazeGamePanel());
-            this.game2Panel = CreateGamePanel("game2Panel", new ShapeDraggingGamePanel());
+            this.game1Panel = CreateGamePanel("game1Panel");
+            this.game2Panel = CreateGamePanel("game2Panel");
             this.game3Panel = CreateGamePanel("game3Panel");
+            game1Panel.Controls.Add(new ColorMatchingGame() { Dock = DockStyle.Fill });
+            game2Panel.Controls.Add(new MazeGame() { Dock = DockStyle.Fill });
+            game3Panel.Controls.Add(new ShapeDraggingGame() { Dock = DockStyle.Fill });
             this.SuspendLayout();
             // 
             // mainPanel
