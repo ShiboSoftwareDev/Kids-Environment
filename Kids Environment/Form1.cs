@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace KidsGameEnvironment
@@ -54,16 +55,22 @@ namespace KidsGameEnvironment
         private void btnGame1_Click(object sender, EventArgs e)
         {
             ShowPanel(game1Panel);
+            FocusGamePanel(game1Panel);
+
         }
 
         private void btnGame2_Click(object sender, EventArgs e)
         {
             ShowPanel(game2Panel);
+            FocusGamePanel(game2Panel);
+            
         }
 
         private void btnGame3_Click(object sender, EventArgs e)
         {
             ShowPanel(game3Panel);
+            FocusGamePanel(game3Panel);
+
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -74,6 +81,8 @@ namespace KidsGameEnvironment
         private void btnReturn_Click(object sender, EventArgs e)
         {
             ShowPanel(mainPanel);
+            FocusGamePanel(mainPanel);
+
         }
 
         private void ShowPanel(Panel panel)
@@ -86,8 +95,16 @@ namespace KidsGameEnvironment
             panel.Visible = true;
             panel.Focus();
         }
+        private void FocusGamePanel(Panel panel)
+        {
+            var gameControl = panel.Controls.OfType<Control>().FirstOrDefault(c => c is ColorMatchingGame || c is MazeGame || c is ShapeDraggingGame);
+            if (gameControl != null)
+            {
+                gameControl.Focus();
+            }
+        }
 
-        private Panel CreateGamePanel(string panelName, Panel gamePanel = null)
+private Panel CreateGamePanel(string panelName, Panel gamePanel = null)
         {
             Panel panel = new Panel
             {

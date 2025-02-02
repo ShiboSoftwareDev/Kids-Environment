@@ -10,7 +10,7 @@ namespace KidsGameEnvironment
     {
         private enum ShapeType { Square, Circle, Triangle, Hexagon }
         private const int NumberOfShapes = 4;
-        private const int InitialTime = 30;
+        private const int InitialTime = 10;
         private const int BaseShapeSize = 60;
 
         private ShapeType[] shapeTypes;
