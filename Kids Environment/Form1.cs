@@ -23,9 +23,7 @@ namespace KidsGameEnvironment
             this.game2Panel = CreateGamePanel("game2Panel");
             this.game3Panel = CreateGamePanel("game3Panel");
             this.SuspendLayout();
-            // 
-            // mainPanel
-            // 
+            
             this.mainPanel.Controls.Add(CreateButton("btnGame1", "Memory Color Matching", new System.Drawing.Point(175, 262), new System.EventHandler(this.btnGame1_Click)));
             this.mainPanel.Controls.Add(CreateButton("btnGame2", "Maze", new System.Drawing.Point(335, 262), new System.EventHandler(this.btnGame2_Click)));
             this.mainPanel.Controls.Add(CreateButton("btnGame3", "Shape Dragging", new System.Drawing.Point(495, 262), new System.EventHandler(this.btnGame3_Click)));
@@ -35,9 +33,7 @@ namespace KidsGameEnvironment
             this.mainPanel.Name = "mainPanel";
             this.mainPanel.Size = new System.Drawing.Size(1000, 600);
             this.mainPanel.TabIndex = 4;
-            // 
-            // MainForm
-            // 
+
             this.ClientSize = new System.Drawing.Size(1000, 600);
             this.Controls.Add(this.mainPanel);
             this.Controls.Add(this.game1Panel);

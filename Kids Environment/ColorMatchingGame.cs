@@ -13,7 +13,7 @@ namespace KidsGameEnvironment
         private Button secondClicked;
         private Dictionary<Button, Color> cardColors;
         private List<Color> colors;
-        private int gridSize = 4; // 4x4 grid
+        private int gridSize = 4;
 
         private Label resultLabel;
         private Button restartButton;
@@ -22,25 +22,23 @@ namespace KidsGameEnvironment
         {
             this.Dock = DockStyle.Fill;
             this.BackColor = Color.DarkGreen;
-            this.Padding = new Padding(20, 70, 20, 20); // Add padding around the control
+            this.Padding = new Padding(20, 70, 20, 20);
             InitializeGame();
             InitializeUI();
         }
 
         private void InitializeGame()
         {
-            // Prepare colors (8 pairs for a 4x4 grid)
+
             colors = new List<Color>
             {
                 Color.Red, Color.Blue, Color.Yellow, Color.Purple,
                 Color.Orange, Color.Cyan, Color.Magenta, Color.Lime
             };
 
-            // Duplicate colors and shuffle
             List<Color> cardList = colors.Concat(colors).ToList();
             Shuffle(cardList);
 
-            // Create a grid of buttons
             grid = new TableLayoutPanel
             {
                 RowCount = gridSize,
@@ -66,7 +64,7 @@ namespace KidsGameEnvironment
                     Tag = i,
                     Font = new Font(FontFamily.GenericSansSerif, 24, FontStyle.Bold)
                 };
-                // Save the card's hidden color
+
                 cardColors[card] = cardList[i];
                 card.Click += Card_Click;
                 grid.Controls.Add(card);
@@ -112,7 +110,6 @@ namespace KidsGameEnvironment
                 return;
             }
 
-            // Reveal the card - show its hidden color
             clicked.BackColor = cardColors[clicked];
             clicked.Refresh();
 
@@ -126,13 +123,11 @@ namespace KidsGameEnvironment
                 secondClicked = clicked;
             }
 
-            // Disable all buttons temporarily
             foreach (Button button in grid.Controls.OfType<Button>())
             {
                 button.Enabled = false;
             }
 
-            // Check match after a short delay.
             Timer delayTimer = new Timer { Interval = 500 };
             delayTimer.Tick += (s, args) =>
             {
@@ -144,7 +139,7 @@ namespace KidsGameEnvironment
                 }
                 else if (firstClicked != null && secondClicked != null)
                 {
-                    // Optionally disable buttons
+
                     firstClicked.Enabled = false;
                     secondClicked.Enabled = false;
                 }
@@ -152,7 +147,6 @@ namespace KidsGameEnvironment
                 firstClicked = null;
                 secondClicked = null;
 
-                // Re-enable all buttons that are still gray
                 foreach (Button button in grid.Controls.OfType<Button>().Where(b => b.BackColor == Color.Gray))
                 {
                     button.Enabled = true;

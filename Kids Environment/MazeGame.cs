@@ -61,8 +61,8 @@ namespace KidsGameEnvironment
                 FlatStyle = FlatStyle.Flat,
                 Visible = false
             };
-restartButton.Click += RestartButton_Click;
-Controls.Add(restartButton);
+            restartButton.Click += RestartButton_Click;
+            Controls.Add(restartButton);
         }
 
         protected override bool IsInputKey(Keys keyData)
@@ -94,7 +94,7 @@ Controls.Add(restartButton);
                     maze[r, c] = new MazeCell();
                 }
             }
-            // Generate maze using DFS recursive backtracker
+
             Stack<Point> stack = new Stack<Point>();
             bool[,] visited = new bool[mazeRows, mazeCols];
             Point current = new Point(0, 0);
@@ -102,7 +102,7 @@ Controls.Add(restartButton);
             do
             {
                 var neighbors = new List<(Point pt, string dir)>();
-                // Check up/down/left/right
+
                 if (current.Y > 0 && !visited[current.Y - 1, current.X])
                     neighbors.Add((new Point(current.X, current.Y - 1), "N"));
                 if (current.Y < mazeRows - 1 && !visited[current.Y + 1, current.X])
@@ -115,7 +115,7 @@ Controls.Add(restartButton);
                 if (neighbors.Any())
                 {
                     var next = neighbors[random.Next(neighbors.Count)];
-                    // Remove wall between current and next
+
                     if (next.dir == "N")
                     {
                         maze[current.Y, current.X].North = false;
@@ -210,7 +210,7 @@ Controls.Add(restartButton);
             Invalidate();
         }
 
-protected override void OnPaint(PaintEventArgs e)
+        protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
             if (maze == null) return;
@@ -221,7 +221,7 @@ protected override void OnPaint(PaintEventArgs e)
 
             using (Pen wallPen = new Pen(Color.Black, 2))
             {
-                // Draw maze cells
+
                 for (int r = 0; r < mazeRows; r++)
                 {
                     for (int c = 0; c < mazeCols; c++)
@@ -229,7 +229,6 @@ protected override void OnPaint(PaintEventArgs e)
                         int x = offsetX + c * cellSize;
                         int y = offsetY + r * cellSize;
 
-                        // If wall exists, draw it.
                         if (maze[r, c].North)
                             e.Graphics.DrawLine(wallPen, x, y, x + cellSize, y);
                         if (maze[r, c].West)
@@ -242,13 +241,11 @@ protected override void OnPaint(PaintEventArgs e)
                 }
             }
 
-            // Highlight exit cell
             int exitX = offsetX + exitPosition.X * cellSize;
             int exitY = offsetY + exitPosition.Y * cellSize;
             e.Graphics.FillRectangle(Brushes.LightGreen, exitX + 4, exitY + 4,
                 cellSize - 8, cellSize - 8);
 
-            // Draw player (circle)
             int playerX = offsetX + playerPosition.X * cellSize;
             int playerY = offsetY + playerPosition.Y * cellSize;
             e.Graphics.FillEllipse(Brushes.Blue, playerX + 4, playerY + 4,

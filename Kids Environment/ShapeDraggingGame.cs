@@ -261,7 +261,7 @@ namespace KidsGameEnvironment
 
             if (gameStarted)
             {
-                // Draw targets with matching color outlines
+
                 using (Brush targetBrush = new SolidBrush(targetColor))
                 {
                     for (int i = 0; i < NumberOfShapes; i++)
