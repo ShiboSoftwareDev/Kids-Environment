@@ -124,7 +124,8 @@ namespace KidsGameEnvironment
                 Location = new Point((Width - 500) / 2, 20),
                 TextAlign = ContentAlignment.MiddleCenter,
                 Font = new Font("Arial", 14, FontStyle.Bold),
-                ForeColor = Color.DarkBlue
+                ForeColor = Color.DarkBlue,
+
             };
             Controls.Add(titleLabel);
 
@@ -147,7 +148,9 @@ namespace KidsGameEnvironment
                 Location = new Point((Width - 200) / 2, Height - 100),
                 TextAlign = ContentAlignment.MiddleCenter,
                 Font = new Font("Arial", 14),
-                ForeColor = Color.DarkBlue
+                ForeColor = Color.DarkBlue,
+                BackColor = Color.Transparent
+
             };
             Controls.Add(timerLabel);
             timerLabel.Visible = false;
@@ -170,7 +173,9 @@ namespace KidsGameEnvironment
                 Size = new Size(500, 50),
                 Location = new Point((Width - 500) / 2, 270),
                 TextAlign = ContentAlignment.MiddleCenter,
-                Font = new Font("Arial", 14, FontStyle.Bold)
+                Font = new Font("Arial", 14, FontStyle.Bold),
+                BackColor = Color.Transparent
+
             };
             Controls.Add(resultLabel);
             resultLabel.Visible = false;
