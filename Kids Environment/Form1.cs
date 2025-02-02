@@ -26,9 +26,9 @@ namespace KidsGameEnvironment
             // 
             // mainPanel
             // 
-            this.mainPanel.Controls.Add(CreateButton("btnGame1", "Game 1", new System.Drawing.Point(175, 262), new System.EventHandler(this.btnGame1_Click)));
-            this.mainPanel.Controls.Add(CreateButton("btnGame2", "Game 2", new System.Drawing.Point(335, 262), new System.EventHandler(this.btnGame2_Click)));
-            this.mainPanel.Controls.Add(CreateButton("btnGame3", "Game 3", new System.Drawing.Point(495, 262), new System.EventHandler(this.btnGame3_Click)));
+            this.mainPanel.Controls.Add(CreateButton("btnGame1", "Memory Color Matching", new System.Drawing.Point(175, 262), new System.EventHandler(this.btnGame1_Click)));
+            this.mainPanel.Controls.Add(CreateButton("btnGame2", "Maze", new System.Drawing.Point(335, 262), new System.EventHandler(this.btnGame2_Click)));
+            this.mainPanel.Controls.Add(CreateButton("btnGame3", "Shape Dragging", new System.Drawing.Point(495, 262), new System.EventHandler(this.btnGame3_Click)));
             this.mainPanel.Controls.Add(CreateButton("btnExit", "Exit", new System.Drawing.Point(655, 262), new System.EventHandler(this.btnExit_Click), System.Drawing.Color.Red));
             this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainPanel.Location = new System.Drawing.Point(0, 0);
