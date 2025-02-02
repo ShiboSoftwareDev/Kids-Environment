@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace KidsGameEnvironment
 {
@@ -16,6 +17,9 @@ namespace KidsGameEnvironment
         private Point exitPosition;
         private Random random = new Random();
 
+        private Label resultLabel;
+        private Button restartButton;
+
         public MazeGame()
         {
             this.Dock = DockStyle.Fill;
@@ -24,12 +28,41 @@ namespace KidsGameEnvironment
             this.Resize += (s, e) => { Invalidate(); };
 
             GenerateMaze();
+            InitializeUI();
+
+
+
             playerPosition = new Point(0, 0);
             exitPosition = new Point(mazeCols - 1, mazeRows - 1);
 
             this.KeyDown += Game3Control_KeyDown;
             this.SetStyle(ControlStyles.Selectable, true);
             this.TabStop = true;
+        }
+
+        private void InitializeUI()
+        {
+            resultLabel = new Label
+            {
+                Size = new Size(500, 50),
+                TextAlign = ContentAlignment.MiddleCenter,
+                Font = new Font("Arial", 14, FontStyle.Bold),
+                BackColor = Color.Transparent,
+                Visible = false
+            };
+            Controls.Add(resultLabel);
+
+            restartButton = new Button
+            {
+                Text = "Play Again",
+                Size = new Size(150, 40),
+                Font = new Font("Arial", 10),
+                BackColor = Color.LightGreen,
+                FlatStyle = FlatStyle.Flat,
+                Visible = false
+            };
+restartButton.Click += RestartButton_Click;
+Controls.Add(restartButton);
         }
 
         protected override bool IsInputKey(Keys keyData)
@@ -151,12 +184,33 @@ namespace KidsGameEnvironment
 
                 if (playerPosition == exitPosition)
                 {
-                    MessageBox.Show("You've escaped the maze!");
+                    ShowWinningMessage();
+
                 }
             }
         }
+        private void ShowWinningMessage()
+        {
+            resultLabel.Text = "Congratulations! You've escaped the maze!";
+            resultLabel.ForeColor = Color.Green;
+            resultLabel.BackColor = Color.White;
+            resultLabel.Location = new Point((Width - resultLabel.Width) / 2, (Height - resultLabel.Height) / 2);
+            resultLabel.Visible = true;
 
-        protected override void OnPaint(PaintEventArgs e)
+            restartButton.Location = new Point((Width - restartButton.Width) / 2, resultLabel.Bottom + 10);
+            restartButton.Visible = true;
+        }
+
+        private void RestartButton_Click(object sender, EventArgs e)
+        {
+            GenerateMaze();
+            playerPosition = new Point(0, 0);
+            resultLabel.Visible = false;
+            restartButton.Visible = false;
+            Invalidate();
+        }
+
+protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
             if (maze == null) return;
