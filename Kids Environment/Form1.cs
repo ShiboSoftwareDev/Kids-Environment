@@ -22,9 +22,6 @@ namespace KidsGameEnvironment
             this.game1Panel = CreateGamePanel("game1Panel");
             this.game2Panel = CreateGamePanel("game2Panel");
             this.game3Panel = CreateGamePanel("game3Panel");
-            game1Panel.Controls.Add(new ColorMatchingGame() { Dock = DockStyle.Fill });
-            game2Panel.Controls.Add(new MazeGame() { Dock = DockStyle.Fill });
-            game3Panel.Controls.Add(new ShapeDraggingGame() { Dock = DockStyle.Fill });
             this.SuspendLayout();
             // 
             // mainPanel
@@ -55,22 +52,19 @@ namespace KidsGameEnvironment
         private void btnGame1_Click(object sender, EventArgs e)
         {
             ShowPanel(game1Panel);
-            FocusGamePanel(game1Panel);
-
+            AddGameControl(game1Panel, new ColorMatchingGame());
         }
 
         private void btnGame2_Click(object sender, EventArgs e)
         {
             ShowPanel(game2Panel);
-            FocusGamePanel(game2Panel);
-            
+            AddGameControl(game2Panel, new MazeGame());
         }
 
         private void btnGame3_Click(object sender, EventArgs e)
         {
             ShowPanel(game3Panel);
-            FocusGamePanel(game3Panel);
-
+            AddGameControl(game3Panel, new ShapeDraggingGame());
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -81,8 +75,7 @@ namespace KidsGameEnvironment
         private void btnReturn_Click(object sender, EventArgs e)
         {
             ShowPanel(mainPanel);
-            FocusGamePanel(mainPanel);
-
+            RemoveGameControls();
         }
 
         private void ShowPanel(Panel panel)
@@ -95,16 +88,22 @@ namespace KidsGameEnvironment
             panel.Visible = true;
             panel.Focus();
         }
-        private void FocusGamePanel(Panel panel)
+
+        private void AddGameControl(Panel panel, Control gameControl)
         {
-            var gameControl = panel.Controls.OfType<Control>().FirstOrDefault(c => c is ColorMatchingGame || c is MazeGame || c is ShapeDraggingGame);
-            if (gameControl != null)
-            {
-                gameControl.Focus();
-            }
+            gameControl.Dock = DockStyle.Fill;
+            panel.Controls.Add(gameControl);
+            gameControl.Focus();
         }
 
-private Panel CreateGamePanel(string panelName, Panel gamePanel = null)
+        private void RemoveGameControls()
+        {
+            game1Panel.Controls.OfType<Control>().Where(c => c is ColorMatchingGame).ToList().ForEach(c => game1Panel.Controls.Remove(c));
+            game2Panel.Controls.OfType<Control>().Where(c => c is MazeGame).ToList().ForEach(c => game2Panel.Controls.Remove(c));
+            game3Panel.Controls.OfType<Control>().Where(c => c is ShapeDraggingGame).ToList().ForEach(c => game3Panel.Controls.Remove(c));
+        }
+
+        private Panel CreateGamePanel(string panelName, Panel gamePanel = null)
         {
             Panel panel = new Panel
             {
@@ -133,9 +132,8 @@ private Panel CreateGamePanel(string panelName, Panel gamePanel = null)
             };
             returnButton.Click += new System.EventHandler(this.btnReturn_Click);
 
-
             panel.Controls.Add(returnButton);
-            returnButton.BringToFront(); // Ensure the return button is always on top
+            returnButton.BringToFront(); 
 
             return panel;
         }
