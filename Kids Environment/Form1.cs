@@ -16,7 +16,7 @@ namespace KidsGameEnvironment
 
         public MainForm()
         {
-            this.Icon = new System.Drawing.Icon("C:\\Users\\ahmed\\source\\repos\\Kids Environment\\Kids Environment\\joystick_game_3819.ico");
+            this.Icon = new System.Drawing.Icon(".\\joystick_game_3819.ico");
 
             Init();
         }
@@ -41,10 +41,10 @@ namespace KidsGameEnvironment
             this.buttonLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             this.buttonLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
 
-            this.buttonLayoutPanel.Controls.Add(CreateButton("btnGame1", "Memory Color Matching", new EventHandler(this.btnGame1_Click)), 0, 0);
-            this.buttonLayoutPanel.Controls.Add(CreateButton("btnGame2", "Maze", new EventHandler(this.btnGame2_Click)), 1, 0);
-            this.buttonLayoutPanel.Controls.Add(CreateButton("btnGame3", "Shape Dragging", new EventHandler(this.btnGame3_Click)), 2, 0);
-            this.buttonLayoutPanel.Controls.Add(CreateButton("btnExit", "Exit", new EventHandler(this.btnExit_Click), System.Drawing.Color.Red), 3, 0);
+            this.buttonLayoutPanel.Controls.Add(CreateButton("btnGame1", "Memory Color Matching", new EventHandler(this.btnGame1_Click), null, ".\\match.png"), 0, 0);
+            this.buttonLayoutPanel.Controls.Add(CreateButton("btnGame2", "Maze", new EventHandler(this.btnGame2_Click), null, ".\\maze.png"), 1, 0);
+            this.buttonLayoutPanel.Controls.Add(CreateButton("btnGame3", "Shape Dragging", new EventHandler(this.btnGame3_Click), null, ".\\drag.png"), 2, 0);
+            this.buttonLayoutPanel.Controls.Add(CreateButton("btnExit", "X Exit", new EventHandler(this.btnExit_Click), System.Drawing.Color.Red), 3, 0);
 
             this.mainPanel.Controls.Add(this.buttonLayoutPanel); 
 
@@ -148,7 +148,7 @@ namespace KidsGameEnvironment
                 Location = new System.Drawing.Point(12, 12),
                 Name = "btnReturn",
                 Size = new System.Drawing.Size(100, 50),
-                Text = "Return",
+                Text = "< Return",
                 UseVisualStyleBackColor = false,
                 BackColor = System.Drawing.Color.Red
             };
@@ -160,7 +160,7 @@ namespace KidsGameEnvironment
             return panel;
         }
 
-        private Button CreateButton(string name, string text, EventHandler clickEvent, System.Drawing.Color? backColor = null)
+        private Button CreateButton(string name, string text, EventHandler clickEvent, System.Drawing.Color? backColor = null, string imagePath = "")
         {
             Button button = new Button
             {
@@ -169,6 +169,7 @@ namespace KidsGameEnvironment
                 Text = text,
                 UseVisualStyleBackColor = true,
                 Anchor = AnchorStyles.None,
+                Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0))) 
             };
 
             if (backColor.HasValue)
@@ -176,9 +177,16 @@ namespace KidsGameEnvironment
                 button.BackColor = backColor.Value;
             }
 
+            if (!string.IsNullOrEmpty(imagePath))
+            {
+                button.BackgroundImage = System.Drawing.Image.FromFile(imagePath);
+                button.BackgroundImageLayout = ImageLayout.Stretch;
+            }
+
             button.Click += clickEvent;
 
             return button;
         }
+
     }
 }
