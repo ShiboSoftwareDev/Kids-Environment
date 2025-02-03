@@ -11,6 +11,8 @@ namespace KidsGameEnvironment
         private Panel game1Panel;
         private Panel game2Panel;
         private Panel game3Panel;
+        private TableLayoutPanel buttonLayoutPanel;
+
 
         public MainForm()
         {
@@ -26,11 +28,27 @@ namespace KidsGameEnvironment
             this.game2Panel = CreateGamePanel("game2Panel");
             this.game3Panel = CreateGamePanel("game3Panel");
             this.SuspendLayout();
+
             
-            this.mainPanel.Controls.Add(CreateButton("btnGame1", "Memory Color Matching", new System.Drawing.Point(175, 262), new System.EventHandler(this.btnGame1_Click)));
-            this.mainPanel.Controls.Add(CreateButton("btnGame2", "Maze", new System.Drawing.Point(335, 262), new System.EventHandler(this.btnGame2_Click)));
-            this.mainPanel.Controls.Add(CreateButton("btnGame3", "Shape Dragging", new System.Drawing.Point(495, 262), new System.EventHandler(this.btnGame3_Click)));
-            this.mainPanel.Controls.Add(CreateButton("btnExit", "Exit", new System.Drawing.Point(655, 262), new System.EventHandler(this.btnExit_Click), System.Drawing.Color.Red));
+            this.buttonLayoutPanel = new TableLayoutPanel();
+
+            this.buttonLayoutPanel.ColumnCount = 4;
+            this.buttonLayoutPanel.RowCount = 1;
+            this.buttonLayoutPanel.Dock = DockStyle.Fill;
+            this.buttonLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            this.buttonLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            this.buttonLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            this.buttonLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            this.buttonLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+
+            this.buttonLayoutPanel.Controls.Add(CreateButton("btnGame1", "Memory Color Matching", new EventHandler(this.btnGame1_Click)), 0, 0);
+            this.buttonLayoutPanel.Controls.Add(CreateButton("btnGame2", "Maze", new EventHandler(this.btnGame2_Click)), 1, 0);
+            this.buttonLayoutPanel.Controls.Add(CreateButton("btnGame3", "Shape Dragging", new EventHandler(this.btnGame3_Click)), 2, 0);
+            this.buttonLayoutPanel.Controls.Add(CreateButton("btnExit", "Exit", new EventHandler(this.btnExit_Click), System.Drawing.Color.Red), 3, 0);
+
+            this.mainPanel.Controls.Add(this.buttonLayoutPanel); 
+
+
             this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainPanel.Location = new System.Drawing.Point(0, 0);
             this.mainPanel.Name = "mainPanel";
@@ -45,6 +63,11 @@ namespace KidsGameEnvironment
             this.Name = "MainForm";
             this.Text = "Kids Game Environment";
             this.ResumeLayout(false);
+
+            this.mainPanel.Resize += (s, e) =>
+            {
+                this.buttonLayoutPanel.Location = new System.Drawing.Point((this.mainPanel.Width - this.buttonLayoutPanel.Width) / 2, (this.mainPanel.Height - this.buttonLayoutPanel.Height) / 2);
+            };
 
         }
 
@@ -137,15 +160,15 @@ namespace KidsGameEnvironment
             return panel;
         }
 
-        private Button CreateButton(string name, string text, System.Drawing.Point location, EventHandler clickEvent, System.Drawing.Color? backColor = null)
+        private Button CreateButton(string name, string text, EventHandler clickEvent, System.Drawing.Color? backColor = null)
         {
             Button button = new Button
             {
-                Location = location,
                 Name = name,
-                Size = new System.Drawing.Size(150, 75),
+                Size = new System.Drawing.Size(200, 150),
                 Text = text,
-                UseVisualStyleBackColor = true
+                UseVisualStyleBackColor = true,
+                Anchor = AnchorStyles.None,
             };
 
             if (backColor.HasValue)
